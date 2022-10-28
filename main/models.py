@@ -37,7 +37,7 @@ class Rele(models.Model):
     rele_contr = models.ForeignKey(Controllers, on_delete=models.CASCADE, verbose_name='Контроллер')
     rele_time = models.DateTimeField(auto_now=True, verbose_name='Дата\Время')
     rele_num = models.IntegerField(verbose_name='Номер реле')
-    rele_satus = models.BooleanField(verbose_name='Состояние')
+    rele_satus = models.IntegerField(verbose_name='Состояние')
 
     def __str__(self):
-        return self.rele_num
+        return 'Реле-' + str(self.rele_num)

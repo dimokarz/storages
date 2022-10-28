@@ -14,4 +14,4 @@ class OneWireAdmin(admin.ModelAdmin):
 
 @admin.register(Rele)
 class ReleAdmin(admin.ModelAdmin):
-    list_display = ['rele_num']
+    list_display = ['rele_time', 'rele_num', 'rele_satus']
