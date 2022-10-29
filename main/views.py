@@ -29,9 +29,25 @@ def listener(request):
     currData = []
     i = 1
     for row in laurent[0]:
-        print(row)
         currData.append(Rele(rele_contr=controllerId, rele_num=i, rele_satus=int(row)))
         i += 1
     channelX = Rele.objects.bulk_create(currData)
 
     return HttpResponse(laurent)
+
+
+def index(request):
+    controllers = Controllers.objects.all().values()
+    title = 'Выбор склада'
+    return render(request, 'index.html', {'controllers': controllers, 'title': title})
+
+
+def storage(request):
+    controllerID = request.GET.get('contr')[8:]
+    controller = Controllers.objects.all().filter(id=controllerID).values()
+    title = controller[0]['contr_name']
+    address = controller[0]['contr_addr']
+    password = controller[0]['contr_passwd']
+    laurent = getStatus(address, password)
+    return render(request, 'storage.html', {'title': title, 'rele': laurent[0],
+                                            'channelA': laurent[1], 'channelB': laurent[1]})

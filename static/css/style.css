@@ -1,0 +1,16 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+@media (max-width: 1024px) {
+    #colChart {
+        display: none;
+    }
+    .btn-high {
+        height: 120px;
+        padding-bottom: 30px;
+        font-size: 2.8em;
+        font-weight: bold;
+    }
+}

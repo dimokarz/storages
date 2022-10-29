@@ -25,4 +25,6 @@ admin.site.index_title = 'Администрирование системы уп
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('listener/', main.views.listener),
+    path('', main.views.index),
+    path('storage/', main.views.storage)
 ]
