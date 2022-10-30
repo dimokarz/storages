@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+import requests
+from datetime import date
 from .models import Controllers, OneWire, Rele
 from .utils import getStatus
 
@@ -45,9 +47,48 @@ def index(request):
 def storage(request):
     controllerID = request.GET.get('contr')[8:]
     controller = Controllers.objects.all().filter(id=controllerID).values()
-    title = controller[0]['contr_name']
     address = controller[0]['contr_addr']
     password = controller[0]['contr_passwd']
+    title = controller[0]['contr_name'] + ' - ' + address
     laurent = getStatus(address, password)
-    return render(request, 'storage.html', {'title': title, 'rele': laurent[0],
-                                            'channelA': laurent[1], 'channelB': laurent[1]})
+    if laurent != 'Fail':
+        return render(request, 'storage.html', {'title': title, 'reles': laurent[0], 'address': address,
+                                                'password': password, 'channelA': laurent[1], 'channelB': laurent[1]})
+    else:
+        return HttpResponse(f'Fail-{controller[0]["contr_name"]}')
+
+
+
+def ownTemp(request):
+    return render(request, 'owtemp.html')
+
+
+def refreshData(request):
+    address = request.GET.get('addr')
+    password = request.GET.get('passwd')
+    laurent = getStatus(address, password)
+    return render(request, 'owtemp.html', {'reles': laurent[0], 'channelA': laurent[1], 'channelB': laurent[2]})
+
+
+def keyPress(request):
+    address = request.GET.get('addr')
+    password = request.GET.get('passwd')
+    rele = request.GET.get('rele')[6:]
+
+    if request.GET.get('rele') != 'allOff':
+        url = f'http://{address}/cmd.cgi?psw={password}&cmd=REL,{rele},2'
+    else:
+        url = f'http://{address}/cmd.cgi?psw={password}&cmd=REL,ALL,0000'
+
+    try:
+        reqStr = requests.get(url, timeout=2).status_code
+    except:
+        reqStr = 'Fail'
+
+    return HttpResponse(reqStr)
+
+
+def chart(request):
+    controllerID = request.GET.get('contr')
+    owTemp = OneWire.objects.filter(onewire_time__range=['2022-10-29', '2022-10-30']).filter(onewire_contr=controllerID).values()
+    return HttpResponse(owTemp)

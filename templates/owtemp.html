@@ -1,0 +1,49 @@
+{% for rele in reles %}
+    <p id="rele{{ forloop.counter }}" style="display: none">{{ rele }}</p>
+{% endfor %}
+
+<div class="row" style="margin-top: 30px;" id="tblRow">
+    <div class="col-6">
+        <table class="table table-striped caption-top">
+            <caption>Канал A</caption>
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Название</th>
+                    <th scope="col">Температура</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for key, val in channelA.items %}
+                    <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td>{{ key }}</td>
+                        <td style="font-weight: bold">{% if val != '' %}{{ val }} &#8451;{% else %}&#9785;{% endif %}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-6">
+        <table class="table table-striped caption-top">
+            <caption>Канал B</caption>
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Название</th>
+                    <th scope="col">Температура</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for key, val in channelB.items %}
+                    <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td>{{ key }}</td>
+                        <td style="font-weight: bold">{% if val != '' %}{{ val }} &#8451;{% else %}&#9785;{% endif %}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

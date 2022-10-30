@@ -26,5 +26,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('listener/', main.views.listener),
     path('', main.views.index),
-    path('storage/', main.views.storage)
+    path('storage/', main.views.storage),
+    path('owntemp/', main.views.ownTemp),
+    path('refresh/', main.views.refreshData),
+    path('keypress/', main.views.keyPress),
+    path('chart/', main.views.chart),
 ]

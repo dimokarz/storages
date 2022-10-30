@@ -1,0 +1,50 @@
+<div class="row" style="margin-top: 30px;" id="tblRow">
+    <div class="col-6">
+        <table class="table table-striped caption-top">
+            <caption>Канал A</caption>
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Название</th>
+                    <th scope="col">Температура</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>    </tr>
+            </tbody>
+        </table>
+        <p class="card-text placeholder-glow" style="margin-top: -14px;">
+            {% for row in channelA %}
+                {% if forloop.counter|divisibleby:"2" %}
+                    <span class="placeholder col-12 bg-light"></span>
+                {% else %}
+                    <span class="placeholder col-12 bg-secondary"></span>
+                {% endif %}
+            {% endfor %}
+        </p>
+    </div>
+    <div class="col-6">
+        <table class="table table-striped caption-top">
+            <caption>Канал B</caption>
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Название</th>
+                    <th scope="col">Температура</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>    </tr>
+            </tbody>
+        </table>
+        <p class="card-text placeholder-glow" style="margin-top: -14px;">
+            {% for row in channelA %}
+                {% if forloop.counter|divisibleby:"2" %}
+                    <span class="placeholder col-12 bg-light"></span>
+                {% else %}
+                    <span class="placeholder col-12 bg-secondary"></span>
+                {% endif %}
+            {% endfor %}
+        </p>
+    </div>
+</div>

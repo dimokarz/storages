@@ -1,5 +1,38 @@
 {% extends "base.html" %}
 
 {% block content %}
-{{ laurent }}
+
+    <p style="display: none" id="addr">{{ address }}</p>
+    <p style="display: none" id="passwd">{{ password }}</p>
+
+    <div class="row">
+        <div class="col">
+            <div class="row" style="margin-bottom: 10px;">
+                <div class="col text-center d-grid gap-2">
+                    <button type="button" class="btn btn-outline-danger btn-lg btn-high btn-rele" id="allOff">
+                        Отключить все реле
+                    </button>
+                </div>
+            </div>
+            <div class="row" id="releRow">
+                {% for rele in reles %}
+                    <div class="col-3 text-center d-grid gap-2">
+                        <button type="button" class="btn btn-lg btn-high btn-rele {% if i == '1'  %}btn-success{% else %}btn-danger{% endif %}"
+                                id="relBtn{{ forloop.counter }}">Реле{{ forloop.counter }}
+                        </button>
+                    </div>
+                {% endfor %}
+            </div>
+            <div id="table">{% include 'placeholder.html' %}</div>
+        </div>
+        <div class="col-6" id="colChart">
+            <div id="myfirstchart" style="height: 250px;"></div>
+            <div id="myfirstchart2" style="height: 250px;"></div>
+        </div>
+    </div>
+
+    <div class="d-grid gap-2 fixed-bottom">
+        <button class="btn btn-primary btn-lg btn-high btn-back" role="button">К списку складов</button>
+    </div>
+
 {% endblock content %}

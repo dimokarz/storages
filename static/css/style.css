@@ -3,14 +3,35 @@
     padding: 0;
 }
 
+@media (max-width: 1900px) {
+    .placeholder {
+        height: 40px;
+    }
+}
+
 @media (max-width: 1024px) {
     #colChart {
         display: none;
     }
     .btn-high {
-        height: 120px;
+        height: 85px;
         padding-bottom: 30px;
         font-size: 2.8em;
         font-weight: bold;
+    }
+    .caption-top {
+        font-size: 2.2em;
+    }
+    #releRow {
+        margin-top: 40px;
+    }
+    .placeholder {
+        height: 65px;
+    }
+    .navbar {
+        height: 100px;
+    }
+    .navbar-brand {
+        font-size: 2.5em;
     }
 }
