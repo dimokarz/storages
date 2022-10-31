@@ -24,12 +24,21 @@
 </head>
 
 <body>
-    <nav class="navbar bg-light navbar-mobile">
-        <div class="container-fluid">
-            <span class="navbar-brand mb-0 h1">{{ title }}</span>
-        </div>
-    </nav>
-    <div class="container-lg" style="margin-top: 50px;">
+{#    <nav class="navbar bg-light navbar-mobile">#}
+{#        <div class="container-fluid">#}
+{#            <span class="navbar-brand mb-0 h1">{{ title }}</span>#}
+{#        </div>#}
+{#    </nav>#}
+
+        <nav class="navbar navbar-dark bg-dark">
+          <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+              {{ title }}
+            </a>
+          </div>
+        </nav>
+
+    <div class="container-lg" style="margin-top: 30px;">
         {% block content%}{% endblock content %}
     </div>
         {% include 'alert.html' %}

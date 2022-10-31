@@ -21,29 +21,6 @@ def getStatus(address, password):
         return 'Fail'
 
 
-### Список значений для графика
-# def chartPoints(owTemp):
-#
-#     def createDict(channel):
-#         currDate = ''
-#         pointsCurr = {}
-#         labels = []
-#         pointsLst = []
-#         for tmp in owTemp:
-#             if tmp['onewire_channel'] == channel:
-#                 chkDate = tmp['onewire_time'].strftime('%d %b %Y %H:%M')
-#                 if chkDate != currDate and currDate != '':
-#                     pointsLst.append(pointsCurr)
-#                     pointsCurr = {}
-#                 if chkDate != currDate:
-#                     pointsCurr['Date'] = chkDate
-#                     currDate = chkDate
-#                 pointsCurr[tmp['onewire_name']] = tmp['onewire_value']
-#                 labels.append(tmp['onewire_name'])
-#         return [labels, pointsLst]
-#
-#     return [createDict('A'), createDict('B')]
-
 def chartPoints(owTemp, channel):
     currDate = ''
     firstRun = True

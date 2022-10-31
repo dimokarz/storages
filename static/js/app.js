@@ -87,7 +87,9 @@ function getPoints() {
     $.ajax({
         url: '/chart/?contr=1',
         success: function (data) {
-            miniChart('chartA' ,data['channelA']['points'], data['labels'])
+            console.log(data)
+            miniChart('chartA' ,data['channelA']['points'], data['channelA']['labels'])
+            miniChart('chartB' ,data['channelB']['points'], data['channelB']['labels'])
         }
     })
 }
@@ -98,6 +100,8 @@ function miniChart(element, data, keys) {
         data: data,
         xkey: 'Date',
         ykeys: keys,
-        labels: keys
+        labels: keys,
+        hideHover: 'auto',
+        resize: true
     });
 }
