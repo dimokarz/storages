@@ -1,9 +1,11 @@
+import datetime
+
 from django.shortcuts import render
 from django.http import HttpResponse
 import requests
 from datetime import date
 from .models import Controllers, OneWire, Rele
-from .utils import getStatus
+from .utils import getStatus, chartPoints
 
 
 def listener(request):
@@ -90,5 +92,8 @@ def keyPress(request):
 
 def chart(request):
     controllerID = request.GET.get('contr')
-    owTemp = OneWire.objects.filter(onewire_time__range=['2022-10-29', '2022-10-30']).filter(onewire_contr=controllerID).values()
+    dateNow = datetime.datetime.now()
+    datePrev = dateNow - datetime.timedelta(days=1)
+    owTemp = OneWire.objects.filter(onewire_time__range=[datePrev, dateNow]).filter(onewire_contr=controllerID).values()
+    chartPoints(owTemp)
     return HttpResponse(owTemp)

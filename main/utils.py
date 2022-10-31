@@ -1,3 +1,5 @@
+import datetime
+import time
 import requests
 
 
@@ -16,3 +18,20 @@ def getStatus(address, password):
         return [rele, channelA, channelB]
     except:
         return 'Fail'
+
+
+def chartPoints(owTemp):
+    currDate = datetime.date(1001, 1, 1)
+    pointsLst = []
+    pointsCurr = []
+    for row in owTemp:
+        print(currDate, row['onewire_time'])
+        if row['onewire_time'] != currDate:
+            currDate = row['onewire_time']
+            if len(pointsCurr) > 0:
+                print(pointsCurr)
+            pointsCurr = []
+        pointsCurr.append(row['onewire_time'])
+        pointsCurr.append(row['onewire_name'])
+        pointsCurr.append(row['onewire_value'])
+        pointsCurr.append(row['onewire_channel'])
