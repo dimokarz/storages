@@ -1,7 +1,7 @@
 import datetime
 
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 import requests
 from datetime import date
 from .models import Controllers, OneWire, Rele
@@ -95,5 +95,7 @@ def chart(request):
     dateNow = datetime.datetime.now()
     datePrev = dateNow - datetime.timedelta(days=1)
     owTemp = OneWire.objects.filter(onewire_time__range=[datePrev, dateNow]).filter(onewire_contr=controllerID).values()
-    chartPoints(owTemp)
-    return HttpResponse(owTemp)
+    chartA = chartPoints(owTemp, 'A')
+    chartB = chartPoints(owTemp, 'B')
+    return JsonResponse({'channelA': {'labels': chartA[0], 'points': chartA[1]},
+                         'channelB': {'labels': chartB[0], 'points': chartB[1]}})

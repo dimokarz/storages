@@ -5,8 +5,7 @@ $(document).ready(function() {
     if (document.location.pathname === '/storage/') {
         currAddr = $('#addr').text()
         currPasswd = $('#passwd').text()
-        miniChart('myfirstchart')
-        miniChart('myfirstchart2')
+       getPoints()
         let intertval1 = setInterval(getCurrent, 2000)
     }
 })
@@ -84,26 +83,21 @@ $('.btn-rele').on('click', function (event) {
     })
 })
 
-function miniChart(el) {
+function getPoints() {
+    $.ajax({
+        url: '/chart/?contr=1',
+        success: function (data) {
+            miniChart('chartA' ,data['channelA']['points'], data['labels'])
+        }
+    })
+}
+
+function miniChart(element, data, keys) {
     new Morris.Line({
-      // ID of the element in which to draw the chart.
-      element: el,
-      element1: el,
-      // Chart data records -- each entry in this array corresponds to a point on
-      // the chart.
-      data: [
-        { year: '2008', value: 20, value1: 30 },
-        { year: '2009', value: 10, value1: 20 },
-        { year: '2010', value: 5, value1: 25 },
-        { year: '2011', value: 5, value1: 15 },
-        { year: '2012', value: 20, value1: 35 }
-      ],
-      // The name of the data record attribute that contains x-values.
-      xkey: 'year',
-      // A list of names of data record attributes that contain y-values.
-      ykeys: ['value', 'value1'],
-      // Labels for the ykeys -- will be displayed when you hover over the
-      // chart.
-      labels: ['Value']
+        element: element,
+        data: data,
+        xkey: 'Date',
+        ykeys: keys,
+        labels: keys
     });
 }

@@ -3,6 +3,7 @@ import time
 import requests
 
 
+### Данные датчиков
 def getStatus(address, password):
     url = f'http://{address}/json_sensor.cgi?psw={password}'
     try:
@@ -20,18 +21,47 @@ def getStatus(address, password):
         return 'Fail'
 
 
-def chartPoints(owTemp):
-    currDate = datetime.date(1001, 1, 1)
+### Список значений для графика
+# def chartPoints(owTemp):
+#
+#     def createDict(channel):
+#         currDate = ''
+#         pointsCurr = {}
+#         labels = []
+#         pointsLst = []
+#         for tmp in owTemp:
+#             if tmp['onewire_channel'] == channel:
+#                 chkDate = tmp['onewire_time'].strftime('%d %b %Y %H:%M')
+#                 if chkDate != currDate and currDate != '':
+#                     pointsLst.append(pointsCurr)
+#                     pointsCurr = {}
+#                 if chkDate != currDate:
+#                     pointsCurr['Date'] = chkDate
+#                     currDate = chkDate
+#                 pointsCurr[tmp['onewire_name']] = tmp['onewire_value']
+#                 labels.append(tmp['onewire_name'])
+#         return [labels, pointsLst]
+#
+#     return [createDict('A'), createDict('B')]
+
+def chartPoints(owTemp, channel):
+    currDate = ''
+    firstRun = True
+    pointsCurr = {}
+    labels = []
     pointsLst = []
-    pointsCurr = []
-    for row in owTemp:
-        print(currDate, row['onewire_time'])
-        if row['onewire_time'] != currDate:
-            currDate = row['onewire_time']
-            if len(pointsCurr) > 0:
-                print(pointsCurr)
-            pointsCurr = []
-        pointsCurr.append(row['onewire_time'])
-        pointsCurr.append(row['onewire_name'])
-        pointsCurr.append(row['onewire_value'])
-        pointsCurr.append(row['onewire_channel'])
+    for tmp in owTemp:
+        if tmp['onewire_channel'] == channel:
+            if firstRun:
+                labels.append(tmp['onewire_name'])
+            chkDate = tmp['onewire_time'].strftime('%Y-%m-%d %H:%M')
+            if chkDate != currDate and currDate != '':
+                pointsLst.append(pointsCurr)
+                firstRun = False
+                pointsCurr = {}
+            if chkDate != currDate:
+                pointsCurr['Date'] = chkDate
+                currDate = chkDate
+            pointsCurr[tmp['onewire_name']] = tmp['onewire_value']
+
+    return [labels, pointsLst]
