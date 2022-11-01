@@ -1,8 +1,10 @@
+let contr = ''
 let currAddr = ''
 let currPasswd = ''
 
 $(document).ready(function() {
     if (document.location.pathname === '/storage/') {
+        contr = $('#contr').text()
         currAddr = $('#addr').text()
         currPasswd = $('#passwd').text()
        getPoints()
@@ -85,7 +87,7 @@ $('.btn-rele').on('click', function (event) {
 
 function getPoints() {
     $.ajax({
-        url: '/chart/?contr=1',
+        url: '/chart/?contr=' + contr,
         success: function (data) {
             console.log(data)
             miniChart('chartA' ,data['channelA']['points'], data['channelA']['labels'])
@@ -102,6 +104,7 @@ function miniChart(element, data, keys) {
         ykeys: keys,
         labels: keys,
         hideHover: 'auto',
-        resize: true
+        lineColors:['#FF0000', '#FFA500', '#FFFF00', '#008000', '#0000FF', '#000080',
+            '#808080', '#800000', '#00FFFF', '#2F4F4F']
     });
 }

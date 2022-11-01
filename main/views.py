@@ -55,10 +55,10 @@ def storage(request):
     laurent = getStatus(address, password)
     if laurent != 'Fail':
         return render(request, 'storage.html', {'title': title, 'reles': laurent[0], 'address': address,
-                                                'password': password, 'channelA': laurent[1], 'channelB': laurent[1]})
+                                                'password': password, 'channelA': laurent[1], 'channelB': laurent[1],
+                                                'contr': controllerID})
     else:
         return HttpResponse(f'Fail-{controller[0]["contr_name"]}')
-
 
 
 def ownTemp(request):
@@ -69,7 +69,10 @@ def refreshData(request):
     address = request.GET.get('addr')
     password = request.GET.get('passwd')
     laurent = getStatus(address, password)
-    return render(request, 'owtemp.html', {'reles': laurent[0], 'channelA': laurent[1], 'channelB': laurent[2]})
+    lineColors = ['#FF0000', '#FFA500', '#FFFF00', '#008000', '#0000FF', '#000080',
+                  '#808080', '#800000', '#00FFFF', '#2F4F4F']
+    return render(request, 'owtemp.html', {'reles': laurent[0], 'channelA': laurent[1], 'channelB': laurent[2],
+                                           'lineColors': lineColors})
 
 
 def keyPress(request):
