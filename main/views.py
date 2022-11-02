@@ -1,11 +1,10 @@
 import datetime
-
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 import requests
 from datetime import date
 from .models import Controllers, OneWire, Rele
-from .utils import getStatus, chartPoints
+from .utils import getStatus, chartPoints, lineColors
 
 
 def listener(request):
@@ -22,7 +21,7 @@ def listener(request):
         currData = []
         for key, val in laurent[num].items():
             currData.append(
-                OneWire(onewire_contr=controllerId, onewire_name=key, onewire_value=val, onewire_channel=channel))
+                OneWire(onewire_contr=controllerId, onewire_name=key, onewire_value=val[0], onewire_channel=channel))
         channelX = OneWire.objects.bulk_create(currData)
 
     if len(laurent[1]) > 0:
@@ -69,8 +68,6 @@ def refreshData(request):
     address = request.GET.get('addr')
     password = request.GET.get('passwd')
     laurent = getStatus(address, password)
-    lineColors = ['#FF0000', '#FFA500', '#FFFF00', '#008000', '#0000FF', '#000080',
-                  '#808080', '#800000', '#00FFFF', '#2F4F4F']
     return render(request, 'owtemp.html', {'reles': laurent[0], 'channelA': laurent[1], 'channelB': laurent[2],
                                            'lineColors': lineColors})
 
@@ -96,9 +93,9 @@ def keyPress(request):
 def chart(request):
     controllerID = request.GET.get('contr')
     dateNow = datetime.datetime.now()
-    datePrev = dateNow - datetime.timedelta(days=1)
-    owTemp = OneWire.objects.filter(onewire_time__range=[datePrev, dateNow]).filter(onewire_contr=controllerID).values()
+    datePrev = dateNow - datetime.timedelta(hours=12)
+    owTemp = OneWire.objects.filter(onewire_contr=controllerID, onewire_time__range=[datePrev, dateNow]).values()
     chartA = chartPoints(owTemp, 'A')
     chartB = chartPoints(owTemp, 'B')
     return JsonResponse({'channelA': {'labels': chartA[0], 'points': chartA[1]},
-                         'channelB': {'labels': chartB[0], 'points': chartB[1]}})
+                         'channelB': {'labels': chartB[0], 'points': chartB[1]}, 'lineColors': lineColors})

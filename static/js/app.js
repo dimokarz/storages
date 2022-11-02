@@ -7,7 +7,7 @@ $(document).ready(function() {
         contr = $('#contr').text()
         currAddr = $('#addr').text()
         currPasswd = $('#passwd').text()
-       getPoints()
+        getPoints()
         let intertval1 = setInterval(getCurrent, 2000)
     }
 })
@@ -85,18 +85,21 @@ $('.btn-rele').on('click', function (event) {
     })
 })
 
+
 function getPoints() {
     $.ajax({
         url: '/chart/?contr=' + contr,
         success: function (data) {
             console.log(data)
-            miniChart('chartA' ,data['channelA']['points'], data['channelA']['labels'])
-            miniChart('chartB' ,data['channelB']['points'], data['channelB']['labels'])
+            miniChart('chartA' ,data['channelA']['points'], data['channelA']['labels'],
+                data['channelA']['lineColors'])
+            miniChart('chartB' ,data['channelB']['points'], data['channelB']['labels'],
+                data['channelB']['lineColors'])
         }
     })
 }
 
-function miniChart(element, data, keys) {
+function miniChart(element, data, keys, lineColors) {
     new Morris.Line({
         element: element,
         data: data,
@@ -104,7 +107,8 @@ function miniChart(element, data, keys) {
         ykeys: keys,
         labels: keys,
         hideHover: 'auto',
-        lineColors:['#FF0000', '#FFA500', '#FFFF00', '#008000', '#0000FF', '#000080',
-            '#808080', '#800000', '#00FFFF', '#2F4F4F']
+        // lineColors: lineColors,
+        lineColors : ['#FF0000', '#FFA500', '#800080', '#008000', '#0000FF', '#000080',
+                      '#808080', '#800000', '#808000', '#2F4F4F'],
     });
 }

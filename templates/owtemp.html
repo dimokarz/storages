@@ -6,7 +6,7 @@
 <div class="row" style="margin-top: 30px;" id="tblRow">
     <div class="col-6">
         <table class="table table-striped caption-top">
-            <caption>Канал A</caption>
+            <caption>Шина A</caption>
             <thead>
                 <tr>
                     <th scope="col">#</th>
@@ -20,7 +20,7 @@
                         <th scope="row">{{ forloop.counter }}</th>
                         <td>{{ key }}</td>
                         <td style="font-weight: bold">{% if val.0 != '' %}{{ val.0 }} &#8451;{% else %}&#9785;{% endif %}</td>
-                        <td style="background: {{ val.1 }}">&nbsp;</td>
+                        <td id="tdColor" style="background: {{ val.1 }}; width: 5px; padding: 1px;">&nbsp;</td>
                     </tr>
                 {% endfor %}
             </tbody>
@@ -29,7 +29,7 @@
 
     <div class="col-6">
         <table class="table table-striped caption-top">
-            <caption>Канал B</caption>
+            <caption>Шина B</caption>
             <thead>
                 <tr>
                     <th scope="col">#</th>
@@ -43,7 +43,7 @@
                         <th scope="row">{{ forloop.counter }}</th>
                         <td>{{ key }}</td>
                         <td style="font-weight: bold">{% if val.0 != '' %}{{ val.0 }} &#8451;{% else %}&#9785;{% endif %}</td>
-                        <td style="background: {{ val.1 }};">&nbsp;</td>
+                        <td id="tdColor" style="background: {{ val.1 }}; width: 5px; padding: 1px;">&nbsp;</td>
                     </tr>
                 {% endfor %}
             </tbody>

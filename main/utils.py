@@ -3,11 +3,13 @@ import time
 import requests
 
 
+lineColors = ['#FF0000', '#FFA500', '#800080', '#008000', '#0000FF', '#000080',
+             '#808080', '#800000', '#808000', '#2F4F4F']
+
+
 ### Данные датчиков
 def getStatus(address, password):
     url = f'http://{address}/json_sensor.cgi?psw={password}'
-    lineColors = ['#FF0000', '#FFA500', '#FFFF00', '#008000', '#0000FF', '#000080',
-                  '#808080', '#800000', '#00FFFF', '#2F4F4F']
     try:
         request = requests.get(url, timeout=2)
         rele = request.json()['rele']
