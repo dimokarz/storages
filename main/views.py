@@ -99,3 +99,8 @@ def chart(request):
     chartB = chartPoints(owTemp, 'B')
     return JsonResponse({'channelA': {'labels': chartA[0], 'points': chartA[1]},
                          'channelB': {'labels': chartB[0], 'points': chartB[1]}, 'lineColors': lineColors})
+
+
+def mchart(request):
+    controllerID = request.GET.get('contr')
+    return render(request, 'mchart.html', {'contr': controllerID})

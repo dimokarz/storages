@@ -31,4 +31,5 @@ urlpatterns = [
     path('refresh/', main.views.refreshData),
     path('keypress/', main.views.keyPress),
     path('chart/', main.views.chart),
+    path('mchart/', main.views.mchart),
 ]

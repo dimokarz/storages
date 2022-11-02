@@ -7,7 +7,7 @@ $(document).ready(function() {
         contr = $('#contr').text()
         currAddr = $('#addr').text()
         currPasswd = $('#passwd').text()
-        getPoints()
+        getPoints(contr)
         let intertval1 = setInterval(getCurrent, 2000)
     }
 })
@@ -85,8 +85,10 @@ $('.btn-rele').on('click', function (event) {
     })
 })
 
+$('#btnChart').on('click', function () {})
 
-function getPoints() {
+
+function getPoints(contr) {
     $.ajax({
         url: '/chart/?contr=' + contr,
         success: function (data) {
