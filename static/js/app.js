@@ -3,12 +3,21 @@ let currAddr = ''
 let currPasswd = ''
 
 $(document).ready(function() {
-    if (document.location.pathname === '/storage/') {
-        contr = $('#contr').text()
-        currAddr = $('#addr').text()
-        currPasswd = $('#passwd').text()
-        getPoints(contr)
-        let intertval1 = setInterval(getCurrent, 2000)
+    let currPage = document.location.pathname
+    switch (currPage) {
+        case '/storage/': {
+            contr = $('#contr').text()
+            currAddr = $('#addr').text()
+            currPasswd = $('#passwd').text()
+            getPoints(contr)
+            let intertval1 = setInterval(getCurrent, 2000)
+            break
+        }
+        case '/mchart/': {
+            contr = $('#mcContr').text()
+            getPoints(contr)
+            break
+        }
     }
 })
 
@@ -85,12 +94,18 @@ $('.btn-rele').on('click', function (event) {
     })
 })
 
-$('#btnChart').on('click', function () {})
+$('#btnChart').on('click', function () {
+    window.open('/mchart/?contr=' + contr + '&shift=5', '_self')
+})
+
+$('#btnClose').on('click', function () {
+    window.open('/storage/?contr=contrBtn' + contr, '_self')
+})
 
 
 function getPoints(contr) {
     $.ajax({
-        url: '/chart/?contr=' + contr,
+        url: '/chart/?contr=' + contr + '&shift=13',
         success: function (data) {
             console.log(data)
             miniChart('chartA' ,data['channelA']['points'], data['channelA']['labels'],

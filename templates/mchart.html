@@ -1,14 +1,31 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <p id="mcContr">{{ contr }}</p>
-            <div class="h6 pb-2 mb-4 text-secondary border-bottom border-secondary">
-                Шина А
-            </div>
-            <div id="chartA" style="height: 270px; margin-top: -20px;"></div>
-            <br>
-            <div class="h6 pb-2 mb-4 text-secondary border-bottom border-secondary">
-                Шина B
-            </div>
-            <div id="chartB" style="height: 270px; margin-top: -20px;"></div>
+    <p id="mcContr" style="display: none">{{ contr }}</p>
+        <div class="h6 pb-2 mb-4 text-secondary border-bottom border-secondary">
+            Шина А
+        </div>
+        <div id="chartA" style="height: 500px; margin-top: -20px;"></div>
+        <div class="row" style="margin-top: 20px;">
+            {% for key, val in channelA.items %}
+                <div class="col">
+                    <strong style="color: {{ val.1 }}; font-size: 1.2em;">{{ key }}  </strong>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="h6 pb-2 mb-4 text-secondary border-bottom border-secondary" style="margin-top: 50px;">
+            Шина B
+        </div>
+        <div id="chartB" style="height: 500px; margin-top: -20px;"></div>
+        <div class="row">
+            {% for key, val in channelB.items %}
+                <div class="col">
+                    <strong style="color: {{ val.1 }}; font-size: 1.2em;">{{ key }}  </strong>
+                </div>
+            {% endfor %}
+        </div>
+    <div class="d-grid gap-2 fixed-bottom">
+        <button class="btn btn-danger btn-lg btn-high" id="btnClose" role="button">Закрыть</button>
+    </div>
+
 {% endblock content %}

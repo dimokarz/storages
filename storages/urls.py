@@ -15,9 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-
+from django.contrib.auth import views as authView
 import main.views
-from main.views import listener
 
 admin.site.site_header = 'Панель администратора'
 admin.site.index_title = 'Администрирование системы управления складами'
@@ -32,4 +31,6 @@ urlpatterns = [
     path('keypress/', main.views.keyPress),
     path('chart/', main.views.chart),
     path('mchart/', main.views.mchart),
+    path('login/', authView.LoginView.as_view(template_name='login.html')),
+    path('logout/', authView.LoginView.as_view(template_name='index.html')),
 ]

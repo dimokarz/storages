@@ -1,8 +1,8 @@
 import datetime
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
+from django.contrib.auth.decorators import login_required
 import requests
-from datetime import date
 from .models import Controllers, OneWire, Rele
 from .utils import getStatus, chartPoints, lineColors
 
@@ -20,6 +20,8 @@ def listener(request):
     def addData(num, channel):
         currData = []
         for key, val in laurent[num].items():
+            if val == '':
+                val = '0.0'
             currData.append(
                 OneWire(onewire_contr=controllerId, onewire_name=key, onewire_value=val[0], onewire_channel=channel))
         channelX = OneWire.objects.bulk_create(currData)
@@ -39,12 +41,14 @@ def listener(request):
     return HttpResponse(laurent)
 
 
+@login_required
 def index(request):
     controllers = Controllers.objects.all().values()
     title = 'Выбор склада'
     return render(request, 'index.html', {'controllers': controllers, 'title': title})
 
 
+@login_required
 def storage(request):
     controllerID = request.GET.get('contr')[8:]
     controller = Controllers.objects.all().filter(id=controllerID).values()
@@ -60,10 +64,12 @@ def storage(request):
         return HttpResponse(f'Fail-{controller[0]["contr_name"]}')
 
 
+@login_required
 def ownTemp(request):
     return render(request, 'owtemp.html')
 
 
+@login_required
 def refreshData(request):
     address = request.GET.get('addr')
     password = request.GET.get('passwd')
@@ -72,6 +78,7 @@ def refreshData(request):
                                            'lineColors': lineColors})
 
 
+@login_required
 def keyPress(request):
     address = request.GET.get('addr')
     password = request.GET.get('passwd')
@@ -90,10 +97,13 @@ def keyPress(request):
     return HttpResponse(reqStr)
 
 
+@login_required
 def chart(request):
     controllerID = request.GET.get('contr')
+    # shift = int(request.GET.get('shift'))
     dateNow = datetime.datetime.now()
     datePrev = dateNow - datetime.timedelta(hours=12)
+    dateNow = dateNow + datetime.timedelta(hours=1)
     owTemp = OneWire.objects.filter(onewire_contr=controllerID, onewire_time__range=[datePrev, dateNow]).values()
     chartA = chartPoints(owTemp, 'A')
     chartB = chartPoints(owTemp, 'B')
@@ -101,6 +111,13 @@ def chart(request):
                          'channelB': {'labels': chartB[0], 'points': chartB[1]}, 'lineColors': lineColors})
 
 
+@login_required
 def mchart(request):
     controllerID = request.GET.get('contr')
-    return render(request, 'mchart.html', {'contr': controllerID})
+    controller = Controllers.objects.filter(id=controllerID).values()
+    title = controller[0]['contr_name']
+    address = controller[0]['contr_addr']
+    password = controller[0]['contr_passwd']
+    laurent = getStatus(address, password)
+
+    return render(request, 'mchart.html', {'contr': controllerID, 'title': title, 'channelA': laurent[1], 'channelB': laurent[2]})

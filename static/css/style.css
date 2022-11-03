@@ -3,7 +3,7 @@
     padding: 0;
 }
 
-@media (max-width: 1900px) {
+@media screen and (orientation:landscape) {
     .placeholder {
         height: 40px;
     }
@@ -12,13 +12,13 @@
     }
 }
 
-@media (max-width: 1024px) {
+@media screen and (orientation:portrait) {
     #colChart {
         display: none;
     }
     .btn-high {
-        height: 85px;
-        padding-bottom: 30px;
+        height: 100px;
+        /*padding-bottom: 20px;*/
         font-size: 2.8em;
         font-weight: bold;
     }
@@ -29,7 +29,7 @@
         margin-top: 40px;
     }
     .placeholder {
-        height: 65px;
+        height: 70px;
     }
     .navbar {
         height: 100px;
@@ -42,5 +42,11 @@
     }
     #btnChart {
         display: block;
+    }
+    .btn_sel {
+        height: 150px;
+    }
+    #btnGroup {
+        margin-bottom: 30px;
     }
 }
