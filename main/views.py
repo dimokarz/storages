@@ -21,7 +21,7 @@ def listener(request):
         currData = []
         for key, val in laurent[num].items():
             if val == '':
-                val = '0.0'
+                val = 0
             currData.append(
                 OneWire(onewire_contr=controllerId, onewire_name=key, onewire_value=val[0], onewire_channel=channel))
         channelX = OneWire.objects.bulk_create(currData)
